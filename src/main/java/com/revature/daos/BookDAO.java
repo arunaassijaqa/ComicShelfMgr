@@ -10,10 +10,10 @@ import java.util.List;
 public interface BookDAO extends JpaRepository<Book, Integer> {
 
     //find all books by user id
-    //public Book findByUserUserId(int userId);
+    public Book findByUserUserId(int userId);
 
     //find all books by user id
-    //public List<Book> findByBookUserId(int userId);
+   // public List<Book> findByBookUserId(int userId);
 
     //find all books by user id
     //public List<Book> findAllByUserId(int userId);

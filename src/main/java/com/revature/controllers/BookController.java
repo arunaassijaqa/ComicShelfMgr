@@ -197,13 +197,13 @@ public class BookController {
     }
 
 
-    @GetMapping("/user/{userId}")
+    /*@GetMapping("/user/{userId}")
     public ResponseEntity<List<Book>> getBookByUserId(@PathVariable Integer userId) {
 
         System.out.println("-------getBookByUserId GET /books/user/userId  STARTED----------------");
 
-        /*
-        List<Book> b = bookDAO.findAllByUserId(userId);
+
+        List<Book> b = bookDAO.findByBookUserId(userId);
 
 
         if (b.isEmpty()) {
@@ -211,13 +211,14 @@ public class BookController {
             return ResponseEntity.status(404).build();
         }
 
-        */
-        List<Book> b=null;
+
+        //List<Book> b=null;
 
         System.out.println("-------getBookByUserId GET /books/user/userId SUCCESS ----------------");
-        return ResponseEntity.ok().body(b);
+        //return ResponseEntity.ok().body(b);
+        return ResponseEntity.ok(b);
     }
-
+*/
 
 }
 

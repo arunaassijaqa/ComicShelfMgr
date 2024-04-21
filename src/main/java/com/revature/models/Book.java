@@ -16,12 +16,12 @@ public class Book {
     private String bookTitle;
     private String author;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.EAGER,  cascade = CascadeType.MERGE)
     @JoinColumn(name = "userId")
     private User user;
 
-    @Transient //This makes a field that doesn't get persisted (saved/created) to the database
-    private int transientUserId;
+   // @Transient //This makes a field that doesn't get persisted (saved/created) to the database
+    //private int transientUserId;
 
     //Boilerplate code-----------------------------------
 

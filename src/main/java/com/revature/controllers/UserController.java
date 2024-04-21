@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.sound.midi.Soundbank;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -103,7 +104,8 @@ public class UserController {
 
         User newU = u.get();
 
-        user.setUserId(newU.getUserId());
+
+       user.setUserId(newU.getUserId());
 
         User newuser = userDAO.save(user); //updates and inserts use the SAME JPA METHOD, save()
 
@@ -114,6 +116,67 @@ public class UserController {
         return ResponseEntity.status(200).build();
 
     }
+
+
+    //this method will update ONLY the title of a book
+    @PatchMapping("/{userId}")
+    public ResponseEntity<Object> updateBookTitle(@RequestBody String firstname, @PathVariable int userId){
+
+        System.out.println("-------updateUserFirstName PATCH /books/userId STARTED------------");
+
+        //get the user by Id, set the new firstname (setter), save it back to the DB :)
+
+        Optional<User> u = userDAO.findById(userId);
+
+
+
+        //if the Optional is empty, send an error message, otherwise send the updated book
+        if(u.isEmpty())
+        {
+            return ResponseEntity.status(404).body("No book found with ID of: " + userId);
+        }
+
+        //extract the Book from the Optional
+        User newuser = u.get();
+
+        //update the firstname of user (given id) , using the setter
+
+        newuser.setFirstname(firstname);
+        System.out.println(newuser.getFirstname());
+        //finally, save the updated book back to the DB
+        userDAO.save(newuser);
+
+        System.out.println("-------updateUserFirstName PATCH /books/userId SUCCESS------------");
+
+        return ResponseEntity.accepted().body(newuser);
+
+    }
+
+    //this method will delete a user by its ID
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Object> deleteBook(@PathVariable int userId){
+
+        System.out.println("-------deleteUser DALETE /user/userId STARTED------------");
+
+
+        Optional<User> u = userDAO.findById(userId);
+
+
+        if(u.isEmpty()){
+            return ResponseEntity.status(404).body("No book found with ID of: " + userId);
+        }
+
+        User user = u.get();
+
+        userDAO.deleteById(userId);
+
+        System.out.println("-------deleteBook DALETE /books/bookId SUCCESS------------");
+
+
+        return ResponseEntity.accepted().body("Book " + user.getFirstname() + " has been deleted");
+
+    }
+
 
 
 }
