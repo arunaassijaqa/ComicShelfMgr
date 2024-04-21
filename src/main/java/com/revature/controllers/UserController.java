@@ -1,12 +1,15 @@
 package com.revature.controllers;
 
 import com.revature.daos.UserDAO;
+import com.revature.models.Book;
 import com.revature.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @RestController //This makes a class a bean, and converts every response to JSON for us
 @RequestMapping("/users") //All HTTP Requests ending in /users will be handled by this controller
@@ -80,6 +83,35 @@ public class UserController {
 
         //return a ResponseEntity with status 200 (ok), and the user in the body
         return ResponseEntity.ok(u);
+
+    }
+
+    //this method will take an entire user object and replace an existing user with it
+    @PutMapping("/{userId}")
+    public ResponseEntity<Book> updateUser(@RequestBody User user, @PathVariable int userId){
+
+        System.out.println("-------updateUser PUT /users/userId STARTED------------"+userId);
+        //System.out.println(user.getFirstname());
+
+        Optional<User> u = userDAO.findById(userId);
+
+        if(u.isEmpty())
+        {
+            System.out.println("-------updateUser PUT /users/userId FAAID User not found------------");
+            return ResponseEntity.status(404).build();
+        }
+
+        User newU = u.get();
+
+        user.setUserId(newU.getUserId());
+
+        User newuser = userDAO.save(user); //updates and inserts use the SAME JPA METHOD, save()
+
+        System.out.println(newuser.getFirstname());
+
+        System.out.println("-------updateUser PUT /users/userId SUCCESS------------");
+
+        return ResponseEntity.status(200).build();
 
     }
 
