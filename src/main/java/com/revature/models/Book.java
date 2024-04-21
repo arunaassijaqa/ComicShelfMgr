@@ -1,6 +1,8 @@
 package com.revature.models;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.stereotype.Component;
 
 
@@ -16,8 +18,9 @@ public class Book {
     private String bookTitle;
     private String author;
 
-    @ManyToOne(fetch = FetchType.EAGER,  cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
     @JoinColumn(name = "userId")
+    //@OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
    // @Transient //This makes a field that doesn't get persisted (saved/created) to the database

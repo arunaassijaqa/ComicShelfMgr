@@ -84,7 +84,7 @@ public class BookController {
 
     }
 
-    //this method will take an entire book object and replace an existing book with it
+    //This method will take an entire book object and replace an existing book with it
     @PutMapping("/{userId}")
     public ResponseEntity<Book> updateBook(@RequestBody Book book, @PathVariable int userId){
 
